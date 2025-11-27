@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>🛒 Cotización de Cámaras CCTV</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #111827;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #f9fafb;
+            margin: 25px;
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            margin: 0;
+            text-align: center;
+            color: #111827;
+            font-size: 1.9rem;
+        }
+
+        .subtitulo {
+            margin: 5px 0 15px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        .links {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .links a {
+            display: inline-block;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: bold;
+            color: #2563eb;
+            font-size: 0.95rem;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .consulta-folio {
+            margin-bottom: 18px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: #e5e7eb;
+            font-size: 0.85rem;
+        }
+
+        .consulta-folio label {
+            font-weight: 600;
+            margin-right: 6px;
+        }
+
+        .consulta-folio input[type="text"] {
+            padding: 5px 8px;
+            border-radius: 6px;
+            border: 1px solid #9ca3af;
+            font-size: 0.85rem;
+            width: 150px;
+        }
+
+        .consulta-folio button {
+            margin-left: 4px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .btn-buscar { background: #2563eb; color: #fff; }
+        .btn-buscar:hover { background: #1d4ed8; }
+
+        .btn-nuevo { background: #d1d5db; color: #111827; }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px 24px;
+        }
+
+        .full-width { grid-column: 1 / 3; }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #111827;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 0.95rem;
+        }
+
+        textarea { min-height: 70px; resize: vertical; }
+
+        .campo-opciones {
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+        }
+
+        .campo-opciones div {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 5px;
+        }
+
+        .campo-opciones input[type="radio"],
+        .campo-opciones input[type="checkbox"] {
+            transform: scale(1.1);
+            margin: 0;
+        }
+
+        .grupo-titulo {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 4px;
+        }
+
+        .megapixeles-opcion span {
+            display: block;
+            font-size: 0.78rem;
+            color: #6b7280;
+            margin-left: 22px;
+            margin-bottom: 8px;
+        }
+
+        .folio-box {
+            background: #dbeafe;
+            border: 1px dashed #2563eb;
+            padding: 8px 10px;
+            border-radius: 8px;
+            color: #1d4ed8;
+            font-size: 0.9rem;
+        }
+
+        .folio-valor {
+            font-weight: 700;
+        }
+
+        .mensaje {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: #065f46;
+        }
+
+        .mensaje.error {
+            color: #b91c1c;
+        }
+
+        .botones {
+            grid-column: 1 / 3;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        button[type="submit"],
+        button[type="reset"] {
+            padding: 10px 18px;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .btn-primario { background: #2563eb; color: white; }
+        .btn-primario:hover { background: #1d4ed8; }
+
+        .btn-secundario { background: #e5e7eb; color: #111827; }
+
+        @media (max-width: 720px) {
+            form { grid-template-columns: 1fr; }
+            .full-width { grid-column: 1 / 2; }
+            .botones { grid-column: 1 / 2; }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <h1>🛒 Cotización de Cámaras CCTV</h1>
+    <p class="subtitulo">Completa los siguientes datos para generar y guardar tu cotización.</p>
+
+    <div class="links">
+        <a href="https://www.facebook.com/rothsoft" target="_blank">📘 Facebook RothSoft</a>
+        <a href="https://www.facebook.com/cyberjuniorss" target="_blank">🌐 Página Web</a>
+    </div>
+
+    <!-- CONSULTA / NUEVO FOLIO -->
+    <div class="consulta-folio">
+        <div style="margin-bottom: 6px;">
+            <strong>Consultar cotización por folio:</strong>
+        </div>
+        <label for="buscarFolio">Folio:</label>
+        <input type="text" id="buscarFolio" placeholder="Ej. COTIZA0001">
+        <button type="button" class="btn-buscar" onclick="buscarCotizacion()">Buscar</button>
+        <button type="button" class="btn-nuevo" onclick="nuevoFormulario()">Nuevo</button>
+        <div id="mensajeConsulta" class="mensaje" style="display:none;"></div>
+    </div>
+
+    <!-- FORMULARIO -->
+    <form id="formCotizacion">
+
+        <!-- DATOS DEL CLIENTE -->
+        <div class="full-width">
+            <label>Nombre Completo</label>
+            <input type="text" name="nombreCompleto" placeholder="Ej. Juan Pérez Martínez" required>
+        </div>
+
+        <div>
+            <label>Número de WhatsApp</label>
+            <input type="tel" name="whatsapp" placeholder="Ej. 7441234567" required>
+        </div>
+
+        <div>
+            <label>Teléfono adicional (opcional)</label>
+            <input type="tel" name="telefono" placeholder="Opcional: 7449876543">
+        </div>
+
+        <div>
+            <label>Tipo de Lugar</label>
+            <select name="tipoLugar">
+                <option value="">Selecciona...</option>
+                <option>Casa</option>
+                <option>Negocio</option>
+                <option>Bodega</option>
+                <option>Terreno</option>
+                <option>Escuela</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Colonia o Zona</label>
+            <input type="text" name="zona" placeholder="Ej. Centro, Azoyú">
+        </div>
+
+        <div class="full-width">
+            <label>Áreas a Monitorear</label>
+            <textarea name="areas" placeholder="Ej. entrada principal, pasillo, patio, estacionamiento..."></textarea>
+        </div>
+
+        <!-- EQUIPO EXISTENTE -->
+        <div>
+            <label class="grupo-titulo">¿Ya tiene cámaras instaladas?</label>
+            <div class="campo-opciones">
+                <div><input type="radio" name="equipo" value="Sí"><label>Sí</label></div>
+                <div><input type="radio" name="equipo" value="No" checked><label>No</label></div>
+            </div>
+        </div>
+
+        <div>
+            <label>Modelo existente</label>
+            <input type="text" name="modeloExistente" placeholder="Ej. Hikvision 720p, Dahua Cooper, Ezviz C3W">
+        </div>
+
+        <!-- ADQUISICIÓN -->
+        <div class="full-width">
+            <label class="grupo-titulo">¿Qué desea adquirir?</label>
+            <div class="campo-opciones">
+                <div><input type="checkbox" name="adquiere" value="Kit completo"><label>Kit completo (DVR/NVR + cámaras)</label></div>
+                <div><input type="checkbox" name="adquiere" value="Solo cámaras"><label>Solo cámaras</label></div>
+                <div><input type="checkbox" name="adquiere" value="Solo instalación"><label>Solo instalación</label></div>
+                <div><input type="checkbox" name="adquiere" value="Accesorios"><label>Accesorios (cables, conectores)</label></div>
+            </div>
+        </div>
+
+        <!-- TIPO DE CÁMARA -->
+        <div>
+            <label class="grupo-titulo">Tipo de Cámara</label>
+            <div class="campo-opciones">
+                <div><input type="checkbox" name="tipoCam" value="Interior"><label>Interior</label></div>
+                <div><input type="checkbox" name="tipoCam" value="Exterior"><label>Exterior</label></div>
+            </div>
+        </div>
+
+        <div>
+            <label class="grupo-titulo">Resistencia</label>
+            <div class="campo-opciones">
+                <div><input type="radio" name="resistencia" value="Normal" checked><label>Normal</label></div>
+                <div><input type="radio" name="resistencia" value="Rudo"><label>Uso rudo</label></div>
+            </div>
+        </div>
+
+        <!-- TECNOLOGÍA -->
+        <div>
+            <label class="grupo-titulo">Tecnología</label>
+            <div class="campo-opciones">
+                <div><input type="radio" name="tecnologia" value="WiFi"><label>WiFi</label></div>
+                <div><input type="radio" name="tecnologia" value="Cableada"><label>Cableada</label></div>
+                <div><input type="radio" name="tecnologia" value="No sé"><label>No sé, necesito recomendación</label></div>
+            </div>
+        </div>
+
+        <!-- VISIÓN NOCTURNA -->
+        <div>
+            <label class="grupo-titulo">Visión Nocturna</label>
+            <div class="campo-opciones">
+                <div><input type="radio" name="vision" value="Sí"><label>Sí, infrarroja</label></div>
+                <div><input type="radio" name="vision" value="Color"><label>Sí, visión nocturna a color</label></div>
+                <div><input type="radio" name="vision" value="No" checked><label>No</label></div>
+            </div>
+        </div>
+
+        <!-- MEGAPÍXELES -->
+        <div class="full-width">
+            <label class="grupo-titulo">Resolución (Megapíxeles)</label>
+            <div class="campo-opciones">
+                <div class="megapixeles-opcion">
+                    <input type="radio" name="mp" value="2MP">
+                    <label>2 MP — Siluetas</label>
+                    <span>Verás si alguien pasa, pero no el rostro claro.</span>
+                </div>
+
+                <div class="megapixeles-opcion">
+                    <input type="radio" name="mp" value="5MP">
+                    <label>5 MP — Rostro</label>
+                    <span>Se distingue rostro y detalles de ropa.</span>
+                </div>
+
+                <div class="megapixeles-opcion">
+                    <input type="radio" name="mp" value="8MP">
+                    <label>8 MP — Placas</label>
+                    <span>Se ven placas y detalles con nitidez.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- NUEVO CAMPO: CANTIDAD DE CÁMARAS -->
+        <div>
+            <label>Cantidad de cámaras que necesita</label>
+            <input type="number" name="cantidadCamaras" placeholder="Ej. 4">
+        </div>
+
+        <!-- CABLE -->
+        <div>
+            <label>Metros de cable por cámara</label>
+            <input type="number" name="cable" placeholder="Ej. 10, 15, 20">
+        </div>
+
+        <!-- GRABACIÓN -->
+        <div>
+            <label class="grupo-titulo">Grabación</label>
+            <div class="campo-opciones">
+                <div><input type="radio" name="grabacion" value="24/7" checked><label>24/7</label></div>
+                <div><input type="radio" name="grabacion" value="Movimiento"><label>Solo movimiento</label></div>
+            </div>
+        </div>
+
+        <!-- CELULAR -->
+        <div>
+            <label>¿Desea ver desde su celular?</label>
+            <div class="campo-opciones">
+                <div><input type="radio" name="celular" value="Sí" checked><label>Sí</label></div>
+                <div><input type="radio" name="celular" value="No"><label>No</label></div>
+            </div>
+        </div>
+
+        <!-- PRESUPUESTO -->
+        <div>
+            <label>Presupuesto aproximado</label>
+            <input type="text" name="presupuesto" placeholder="Ej. $5,000 a $8,000">
+        </div>
+
+        <!-- COMENTARIOS -->
+        <div class="full-width">
+            <label>Comentarios adicionales</label>
+            <textarea name="comentarios" placeholder="Ej. quiero que graben en nube, instalación urgente, etc."></textarea>
+        </div>
+
+        <!-- FOLIO -->
+        <div class="full-width">
+            <label>Número de cotización</label>
+            <div class="folio-box">
+                Folio actual: <span id="folioActual" class="folio-valor">COTIZA0001</span><br>
+                <small>Se genera automáticamente al guardar.</small>
+            </div>
+            <div id="mensajeGuardado" class="mensaje" style="display:none;"></div>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="botones">
+            <button type="reset" class="btn-secundario">Limpiar</button>
+            <button type="submit" class="btn-primario">Guardar Cotización</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    // ---------- UTILIDADES DE FOLIO ----------
+    function obtenerSiguienteFolio() {
+        let ultimo = localStorage.getItem('ultimoFolioCCTV');
+        if (!ultimo) ultimo = 0;
+        const siguiente = parseInt(ultimo) + 1;
+        return 'COTIZA' + String(siguiente).padStart(4, '0');
+    }
+
+    function actualizarFolioVisual() {
+        const folio = obtenerSiguienteFolio();
+        document.getElementById('folioActual').textContent = folio;
+    }
+
+    // ---------- OBTENER VALORES ----------
+    function getRadioValue(name) {
+        const radios = document.querySelectorAll('input[type="radio"][name="' + name + '"]');
+        for (const r of radios) {
+            if (r.checked) return r.value;
+        }
+        return '';
+    }
+
+    function getCheckedValuesByName(name) {
+        const checks = document.querySelectorAll('input[type="checkbox"][name="' + name + '"]');
+        const valores = [];
+        checks.forEach(c => { if (c.checked) valores.push(c.value); });
+        return valores;
+    }
+
+    // ---------- RELLENAR FORMULARIO DESDE OBJETO ----------
+    function setRadioValue(name, value) {
+        const radios = document.querySelectorAll('input[type="radio"][name="' + name + '"]');
+        radios.forEach(r => { r.checked = (r.value === value); });
+    }
+
+    function setCheckboxGroup(nameAttr, valores) {
+        const checks = document.querySelectorAll('input[type="checkbox"][name="' + nameAttr + '"]');
+        checks.forEach(c => {
+            c.checked = valores.includes(c.value);
+        });
+    }
+
+    // ---------- GUARDADO ----------
+    function guardarEnLocalStorage(folio, datos) {
+        let cotizaciones = localStorage.getItem('cotizacionesCCTV');
+        if (!cotizaciones) {
+            cotizaciones = {};
+        } else {
+            try { cotizaciones = JSON.parse(cotizaciones); } catch (e) { cotizaciones = {}; }
+        }
+        cotizaciones[folio] = datos;
+        localStorage.setItem('cotizacionesCCTV', JSON.stringify(cotizaciones));
+        // actualizar último folio
+        const num = parseInt(folio.replace('COTIZA', '')) || 0;
+        localStorage.setItem('ultimoFolioCCTV', num);
+    }
+
+    function descargarTxt(folio, datos) {
+        let contenido = 'Folio: ' + folio + '\n';
+        for (const [clave, valor] of Object.entries(datos)) {
+            contenido += clave + ': ' + valor + '\n';
+        }
+        const blob = new Blob([contenido], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = folio + '.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    // ---------- CONSULTA ----------
+    function buscarCotizacion() {
+        const folio = document.getElementById('buscarFolio').value.trim().toUpperCase();
+        const mensaje = document.getElementById('mensajeConsulta');
+        mensaje.style.display = 'none';
+
+        if (!folio) {
+            mensaje.textContent = 'Escribe un folio para buscar, por ejemplo COTIZA0001.';
+            mensaje.className = 'mensaje error';
+            mensaje.style.display = 'block';
+            return;
+        }
+
+        let cotizaciones = localStorage.getItem('cotizacionesCCTV');
+        if (!cotizaciones) {
+            mensaje.textContent = 'No hay cotizaciones guardadas aún.';
+            mensaje.className = 'mensaje error';
+            mensaje.style.display = 'block';
+            return;
+        }
+
+        try { cotizaciones = JSON.parse(cotizaciones); } catch (e) { cotizaciones = {}; }
+
+        const datos = cotizaciones[folio];
+        if (!datos) {
+            mensaje.textContent = 'No se encontró la cotización con folio ' + folio + '.';
+            mensaje.className = 'mensaje error';
+            mensaje.style.display = 'block';
+            return;
+        }
+
+        // Rellenar formulario
+        const f = document.getElementById('formCotizacion');
+        f.nombreCompleto.value = datos.nombreCompleto || '';
+        f.whatsapp.value = datos.whatsapp || '';
+        f.telefono.value = datos.telefono || '';
+        f.tipoLugar.value = datos.tipoLugar || '';
+        f.zona.value = datos.zona || '';
+        f.areas.value = datos.areas || '';
+        f.modeloExistente.value = datos.modeloExistente || '';
+        f.cantidadCamaras.value = datos.cantidadCamaras || '';
+        f.cable.value = datos.cable || '';
+        f.presupuesto.value = datos.presupuesto || '';
+        f.comentarios.value = datos.comentarios || '';
+
+        setRadioValue('equipo', datos.equipo || '');
+        setRadioValue('resistencia', datos.resistencia || '');
+        setRadioValue('tecnologia', datos.tecnologia || '');
+        setRadioValue('vision', datos.vision || '');
+        setRadioValue('mp', datos.mp || '');
+        setRadioValue('grabacion', datos.grabacion || '');
+        setRadioValue('celular', datos.celular || '');
+
+        setCheckboxGroup('adquiere', datos.adquiere ? datos.adquiere.split(',') : []);
+        setCheckboxGroup('tipoCam', datos.tipoCam ? datos.tipoCam.split(',') : []);
+
+        document.getElementById('folioActual').textContent = folio;
+        mensaje.textContent = 'Cotización ' + folio + ' cargada en el formulario.';
+        mensaje.className = 'mensaje';
+        mensaje.style.display = 'block';
+    }
+
+    function nuevoFormulario() {
+        document.getElementById('formCotizacion').reset();
+        actualizarFolioVisual();
+        document.getElementById('mensajeConsulta').style.display = 'none';
+        document.getElementById('mensajeGuardado').style.display = 'none';
+    }
+
+    // ---------- EVENTO SUBMIT ----------
+    document.addEventListener('DOMContentLoaded', function () {
+        actualizarFolioVisual();
+
+        const form = document.getElementById('formCotizacion');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const folio = obtenerSiguienteFolio();
+
+            const adquiere = getCheckedValuesByName('adquiere').join(',');
+            const tipoCam = getCheckedValuesByName('tipoCam').join(',');
+
+            const datos = {
+                nombreCompleto: form.nombreCompleto.value.trim(),
+                whatsapp: form.whatsapp.value.trim(),
+                telefono: form.telefono.value.trim(),
+                tipoLugar: form.tipoLugar.value,
+                zona: form.zona.value.trim(),
+                areas: form.areas.value.trim(),
+                equipo: getRadioValue('equipo'),
+                modeloExistente: form.modeloExistente.value.trim(),
+                adquiere: adquiere,
+                tipoCam: tipoCam,
+                resistencia: getRadioValue('resistencia'),
+                tecnologia: getRadioValue('tecnologia'),
+                vision: getRadioValue('vision'),
+                mp: getRadioValue('mp'),
+                cantidadCamaras: form.cantidadCamaras.value.trim(),
+                cable: form.cable.value.trim(),
+                grabacion: getRadioValue('grabacion'),
+                celular: getRadioValue('celular'),
+                presupuesto: form.presupuesto.value.trim(),
+                comentarios: form.comentarios.value.trim()
+            };
+
+            guardarEnLocalStorage(folio, datos);
+            descargarTxt(folio, datos);
+
+            document.getElementById('folioActual').textContent = folio;
+            const msg = document.getElementById('mensajeGuardado');
+            msg.textContent = 'Cotización guardada con folio ' + folio + '. Se descargó un archivo de texto con la información.';
+            msg.className = 'mensaje';
+            msg.style.display = 'block';
+        });
+    });
+</script>
+</body>
+</html>

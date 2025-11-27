@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>🛒 Cotización de Cámaras CCTV</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+
+        body {
+            margin: 0; padding: 0;
+            background: #111827;
+            display: flex; justify-content: center; align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #f9fafb;
+            margin: 25px; padding: 25px;
+            border-radius: 12px;
+            max-width: 900px; width: 100%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 { margin: 0; text-align: center; color: #111827; font-size: 1.9rem; }
+
+        .subtitulo { margin: 5px 0 15px; text-align: center; font-size: 0.9rem; color: #4b5563; }
+
+        .links { text-align: center; margin-bottom: 20px; }
+        .links a {
+            display: inline-block; margin: 0 10px;
+            text-decoration: none; font-weight: bold;
+            color: #2563eb; font-size: 1rem;
+        }
+        .links a:hover { text-decoration: underline; }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px 24px;
+        }
+        .full-width { grid-column: 1 / 3; }
+
+        label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; color: #111827; }
+
+        input, select, textarea {
+            width: 100%; padding: 8px 10px;
+            border-radius: 8px; border: 1px solid #d1d5db;
+            font-size: 0.95rem;
+        }
+        textarea { min-height: 70px; resize: vertical; }
+
+        .campo-opciones {
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+        }
+
+        .grupo-titulo { font-size: 0.85rem; font-weight: 600; color: #374151; margin-bottom: 4px; }
+
+        .megapixeles-opcion span {
+            display: block; font-size: 0.78rem; color: #6b7280; margin-left: 20px;
+        }
+
+        .botones { grid-column: 1 / 3; display: flex; justify-content: flex-end; gap: 10px; }
+        button { padding: 10px 18px; border-radius: 999px; border: none; cursor: pointer; font-weight: 600; font-size: 0.9rem; }
+        .btn-primario { background: #2563eb; color: white; }
+        .btn-primario:hover { background: #1d4ed8; }
+        .btn-secundario { background: #e5e7eb; color: #111827; }
+
+        .folio-box {
+            background: #dbeafe; border: 1px dashed #2563eb;
+            padding: 8px 10px; border-radius: 8px; color: #1d4ed8;
+        }
+
+        @media (max-width: 720px) {
+            form { grid-template-columns: 1fr; }
+            .full-width { grid-column: 1 / 2; }
+            .botones { grid-column: 1 / 2; }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <h1>🛒 Cotización de Cámaras CCTV</h1>
+    <p class="subtitulo">Completa los siguientes datos para generar tu cotización.</p>
+
+    <!-- LINKS -->
+    <div class="links">
+        <a href="https://www.facebook.com/rothsoft" target="_blank">📘 Facebook RothSoft</a>
+        <a href="https://www.facebook.com/cyberjuniorss" target="_blank">🌐 Página Web</a>
+    </div>
+
+    <form method="post" action="guardar_cotizacion.php">
+
+        <!-- DATOS DEL CLIENTE -->
+        <div class="full-width">
+            <label>Nombre Completo</label>
+            <input type="text" name="nombreCompleto" placeholder="Ej. Juan Pérez Martínez" required>
+        </div>
+
+        <div>
+            <label>Número de WhatsApp</label>
+            <input type="tel" name="whatsapp" placeholder="Ej. 7441234567" required>
+        </div>
+
+        <div>
+            <label>Teléfono adicional</label>
+            <input type="tel" name="telefono" placeholder="Opcional: 7449876543">
+        </div>
+
+        <div>
+            <label>Tipo de Lugar</label>
+            <select name="tipoLugar">
+                <option value="">Selecciona...</option>
+                <option>Casa</option>
+                <option>Negocio</option>
+                <option>Bodega</option>
+                <option>Terreno</option>
+                <option>Escuela</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Colonia o Zona</label>
+            <input type="text" name="zona" placeholder="Ej. Centro, Azoyú">
+        </div>
+
+        <div class="full-width">
+            <label>Áreas a Monitorear</label>
+            <textarea name="areas" placeholder="Ej. entrada principal, pasillo, patio, estacionamiento..."></textarea>
+        </div>
+
+        <!-- EQUIPO EXISTENTE -->
+        <div>
+            <label class="grupo-titulo">¿Ya tiene cámaras instaladas?</label>
+            <div class="campo-opciones">
+                <input type="radio" name="equipo" value="Sí"> Sí <br>
+                <input type="radio" name="equipo" value="No" checked> No
+            </div>
+        </div>
+
+        <div>
+            <label>Modelo existente</label>
+            <input type="text" name="modeloExistente" placeholder="Ej. Hikvision 720p, Dahua Cooper, Ezviz C3W">
+        </div>
+
+        <!-- ADQUISICIÓN -->
+        <div class="full-width">
+            <label class="grupo-titulo">¿Qué desea adquirir?</label>
+            <div class="campo-opciones">
+                <input type="checkbox" name="adquiere[]" value="Kit completo"> Kit completo (DVR/NVR + cámaras) <br>
+                <input type="checkbox" name="adquiere[]" value="Solo cámaras"> Solo cámaras <br>
+                <input type="checkbox" name="adquiere[]" value="Solo instalación"> Solo instalación <br>
+                <input type="checkbox" name="adquiere[]" value="Accesorios"> Accesorios (cables, conectores)
+            </div>
+        </div>
+
+        <!-- TIPO DE CÁMARA -->
+        <div>
+            <label class="grupo-titulo">Tipo de Cámara</label>
+            <div class="campo-opciones">
+                <input type="checkbox" name="tipoCam[]" value="Interior"> Interior <br>
+                <input type="checkbox" name="tipoCam[]" value="Exterior"> Exterior
+            </div>
+        </div>
+
+        <div>
+            <label class="grupo-titulo">Resistencia</label>
+            <div class="campo-opciones">
+                <input type="radio" name="resistencia" value="Normal" checked> Normal (uso doméstico) <br>
+                <input type="radio" name="resistencia" value="Rudo"> Uso rudo (antivandálica)
+            </div>
+        </div>
+
+        <!-- TECNOLOGÍA -->
+        <div>
+            <label class="grupo-titulo">Tecnología</label>
+            <div class="campo-opciones">
+                <input type="radio" name="tecnologia" value="WiFi"> WiFi <br>
+                <input type="radio" name="tecnologia" value="Cableada"> Cableada (AHD/HDCVI/IP) <br>
+                <input type="radio" name="tecnologia" value="No sé"> No sé
+            </div>
+        </div>
+
+        <!-- VISIÓN NOCTURNA -->
+        <div>
+            <label class="grupo-titulo">Visión Nocturna</label>
+            <div class="campo-opciones">
+                <input type="radio" name="vision" value="Sí"> Sí, infrarroja <br>
+                <input type="radio" name="vision" value="Color"> Sí, visión nocturna a color <br>
+                <input type="radio" name="vision" value="No" checked> No
+            </div>
+        </div>
+
+        <!-- MEGAPÍXELES -->
+        <div class="full-width">
+            <label class="grupo-titulo">Resolución (Megapíxeles)</label>
+            <div class="campo-opciones">
+                <input type="radio" name="mp" value="2MP"> 2 MP — Siluetas  
+                <span>Ejemplo: Verás si alguien pasa, pero no el rostro claro.</span>
+
+                <input type="radio" name="mp" value="5MP"> 5 MP — Rostro  
+                <span>Ejemplo: Se distingue rostro y detalles de ropa.</span>
+
+                <input type="radio" name="mp" value="8MP"> 8 MP — Placas  
+                <span>Ejemplo: Puedes ver placas y rostros con nitidez.</span>
+            </div>
+        </div>
+
+        <!-- CABLE -->
+        <div>
+            <label>Metros de cable por cámara</label>
+            <input type="number" name="cable" placeholder="Ej. 10, 15, 20">
+        </div>
+
+        <!-- GRABACIÓN -->
+        <div>
+            <label class="grupo-titulo">Grabación</label>
+            <div class="campo-opciones">
+                <input type="radio" name="grabacion" value="24/7" checked> 24/7 <br>
+                <input type="radio" name="grabacion" value="Movimiento"> Solo movimiento
+            </div>
+        </div>
+
+        <!-- CELULAR -->
+        <div>
+            <label>¿Desea ver desde su celular?</label>
+            <div class="campo-opciones">
+                <input type="radio" name="celular" value="Sí" checked> Sí  
+                <input type="radio" name="celular" value="No"> No
+            </div>
+        </div>
+
+        <!-- PRESUPUESTO -->
+        <div>
+            <label>Presupuesto aproximado</label>
+            <input type="text" name="presupuesto" placeholder="Ej. $5,000 a $8,000">
+        </div>
+
+        <!-- COMENTARIOS -->
+        <div class="full-width">
+            <label>Comentarios adicionales</label>
+            <textarea name="comentarios" placeholder="Ej. quiero que las cámaras graben en nube, necesito instalación urgente, etc."></textarea>
+        </div>
+
+        <!-- FOLIO -->
+        <div class="full-width">
+            <label>Número de Cotización</label>
+            <div class="folio-box">
+                Este folio será generado automáticamente (Ej. COTIZA0001).
+            </div>
+        </div>
+
+        <div class="botones">
+            <button type="reset" class="btn-secundario">Limpiar</button>
+            <button type="submit" class="btn-primario">Guardar Cotización</button>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>
